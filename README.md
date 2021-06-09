@@ -8,3 +8,7 @@ melhorar desemepnho utilizando Cache.
 utlização do spring security e JWT
 monitoramento dos endpoionts com spring boot Actuator e admin
 doumentando a API com Swagger
+protegendo endpoints baseado no perfil do usuario
+testes automatizados dos componentes do spring boot
+utilizando docker na API
+deploy da Api com HEROKU
