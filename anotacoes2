@@ -1,0 +1,81 @@
+Spring security
+usar token e depois usar o stateless
+usar cache
+fazer uma documentacao
+
+
+==========================================
+
+usando paginacao chama interface do springframework data Pageable
+ao chamar requisicao: http://localhost:8080/topicos?pagina=1%qtd=1
+
+para usar filtro de ordenacao e em ordem crescente
+
+ao inves de usar o pageable manualmente, passa direto o pageable no atributo da funcao um pageable, para habilitar isso colocar em ->
+Forum application -> @EnableSpringDataWebSupport
+ao chamar requisicao: http://localhost:8080/topicos?page=1%size=1&sort=id,asc
+
+@pagebleDefault -> define um padrao de ordenacao no banco de dados se nao tiver nenhum parametro para ordenacao
+
+recurso de cash -> add dependencia spring boot starter cache, forumApplication -> @enableCaching
+
+em application.properties -> show sql true format sql true
+
+@cacheEvict - invalida o cache em memoria
+
+onde usar cache? utilizar cache em tabelas que nunca ou raramente sao utilizadas
+
+seguranca -> dependencia spring-boot-starter-security
+
+no securityCOnfiguration -> voce libera servicos para o usuario fazer
+na classe usuario implements UserDetails -> generate method
+
+
+voce pode usar algoritmos de senha como o Bcrypt para armazenar senhas no banco de dados
+
+o certo é utilizar o json web token ao inves de session
+
+o token foi criado no TokenService
+
+no authenticationCOntroller antes de retornar voce gera esse token e retorna para o usuario
+
+
+
+adicionar a dependencia io.jsonwebtoekn , jjwt
+
+no securityConfiguration -> csrf.disable (cross site pass forward de ataque hacker)
+
+@autowired -> procura o @Bean para fazer uma injecao
+
+autenticacaoViaTokenFIlter
+
+monitoramento da sua aplicacao -> 
+spring boot actuator
+adicionar dependencia spting-boot-starter-actuator
+no aplication.properties voce pode por informacoes para o /actuator/info retornar informacoes como nome e versao da aplicacao
+# actuator
+management.endpoint.health.show-details=always
+management.endpoints.web.exposure.include=*
+info.app.name=@project.name@
+info.app.description=@project.description@
+info.app.version=@project.version@
+info.app.encoding=@project.build.sourceEncoding@
+info.app.java.version=@java.version@
+
+ferramenta para puxar informacoes do actuator -> spring-boot-admin -> github -> codecentric Spring boot admin
+é criado um novo projeto para apenas administracao usando esses imports do spring boot admin
+
+no nosso projeto atual voce adiciona dependendia spring-boot-client para ser monitorado
+
+cuidado para configurar a seguranca do spring boot admin, tirar do projeto o permit all do acesso ao monitoramento actuator
+
+# DOCUMENTACAO DE API
+
+ferramenta swagger.io -> gerar relatorio automatico
+springfox.github.io/springfox -> serve para documentar via swag -> adicionar dependencia io.springfox , springfox-swagger2, 2.9.2 e a dependencia io.springfox , springfox-swagger-ui, 2.9.2
+
+depois criar o codigo java swaggerconfiguration.java 
+acessar no endereco localhost:8080/swagger-ui.html
+
+necessario ensinar para o swegger um campo de autenticacao
+

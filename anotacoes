@@ -1,0 +1,63 @@
+livro sobre J2EE expert one-on-one J2EE development without EJB - Rod Johnson
+
+spring boot e spring cloud o que é mais utilizado no mercado
+
+
+todos metodos é necessario adicionar @responseBody. caso contrario ele vai pensar que aquele conteudo tem que retornar uma pagina web
+
+usando anotacao na classe @RestController -> não é necessario colocar o @responsebody
+
+
+adicionando o modulo devtool -> nao é necessario reiniciar o servidor ao adicionar novos codigos
+
+dto -> data transfer object, criando apenas os campos que necessito , no caso TopicoDto
+
+o problema que ele espera uma lista do tipo topicoDto. solucao -> usa um converter -> no java8 é feito topicos.stream().map(TopicoDto::new).collect(COllectors.toList())
+
+
+O que é REST? Representational State Transfer
+
+recursos
+identificador unico de recursos (URI)
+Manipulacao de recursos (Verbo HTTP) -> get,post, put, delete
+representacao de recursos (Media type)
+Comunicacao stateless -> sem estados, sem sessoes
+
+adicionar dependencia spring boot starter data jpa -> para usar jpa
+
+é possivel usar o banco de dados em memoria. o h2 adicionando a dependencia
+
+application.properties -> configuracao do datasource, jpa, h2
+
+caso precise gerenciar o h2 -> localhost:8080/h2-console
+configurar o jdbc url -> jdbc:h2:mem:alura-forum
+
+para acessar banco de dados h2, necessario criar no padrao dao. porem o jpa já tem implementado no modo interface. herdandno essa interface ja pode usar esses metodos prontos do DAO
+
+filtrar por parametros -> localhost:8080/topicos?nomeCUrso=Spring
+
+na hora de criar um filtro dentro do topicoRepository -> para diferenciar voce pode por findByCurso_Nome (curso é relacionamento e nome é o atributo dentro)
+
+se nao quiser seguir o padrao findByCursoNome do jpa -> voce cria o nome que quiser e em cima coloca @Query(jpql)
+@Query("SELECT t FROM Topico t WHERE t.curso.nome = :nomeCurso")
+        List<Topico> carregarPorNomeDoCurso(@Param("nomeCurso")(String nomeCurso);
+
+quando voce faz o post, o correto é devolver o codigo 201, para isso voce tem que passar a url original do site e no corpo uma copia do que foi colocado no sistema. 
+
+Bean validation:
+no topicform -> usar anotacoes como @notNull para validacao
+no topicosController no nosso post é possivel usar um @valid 
+
+no tratamento de erro voce cria erroDeValidacaoHandler -> para retornar a mensagem certa de erro
+
+put x patch
+
+no TopicosController: 
+criar um atualizador de informacoes no banco de dados
+
+criar um excluir de um topico no banco de dados
+
+antes de vazar uma exception para o cliente, usa o if com o Optional para tratar isso antes de fazer um CRUD no banco de dados
+
+
+
